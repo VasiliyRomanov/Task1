@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Task</title>
+</head>
+
+<body>
+
+	<script src="Task1v2.js"></script>
+
+<table id="content" border="1">
+	<thead>
+		<th>ФИО</th>
+		<th>Отдел</th>
+		<th>З/П</th>
+		<th>НДФЛ</th>
+		<th></th>
+	</thead>
+</table>
+
+<!-- Создаем таблицу с данными из массива -->
+
+<script>
+	function renderEmpoyeeRows() {
+		for (var i = 0; i < employees.name.length; i++) {
+			    var row = document.createElement("tr");
+    			var td1 = document.createElement("td");
+  				td1.appendChild(document.createTextNode("" + employees.name[i]));
+    			var td2 = document.createElement("td");
+    			td2.appendChild (document.createTextNode("" + employees.dep[i]));
+    			var td3 = document.createElement("td");
+    			td3.innerHTML = '<input type="text" size="40">';
+    			var td4 = document.createElement("td");
+    			td4.id = 'vat' +i;
+    			td4.appendChild (document.createTextNode(""));
+    			var td5 = document.createElement("td");
+    			td5.id = 'del' + i;
+    			td5.innerHTML = '<input type="button" value="Удалить" onclick="deleteRow(this); ">';
+    			row.appendChild(td1);
+    			row.appendChild(td2);
+    			row.appendChild(td3);
+    			row.appendChild(td4);
+    			row.appendChild(td5);
+    			content.appendChild(row);
+		}
+	}
+renderEmpoyeeRows();
+
+</script>
+
+<!-- Сохраняем введенные в графу З/П данные -->
+
+<script>
+var salaryValue = document.getElementsByTagName("input");
+var salary=[];
+ 
+function save(){
+    for (var i = 0; i <= 3; i++){
+    	var input = salaryValue[i];
+        salary[i] = input.value;
+    }
+}
+ 
+</script>
+
+<!-- Вычисляем НДФЛ и выводим его в соответствующую ячейку -->
+
+<script>
+	function getNDFL() {
+		var vat = 0.13,
+			ndfl = 0;
+
+		for (var i = 0; i < salary.length; i++) {
+			ndfl = vat * salary[i];
+		document.getElementById('vat' + i).innerHTML='' + ndfl;
+		}
+
+
+	}
+</script>
+
+
+<input type="button" value="Рассчитать НДФЛ" onclick="save(); getNDFL()">
+
+<!-- Удаляем строку из таблицы и имя сотрудника из массива -->
+
+<script>
+	function deleteRow(r) {
+	var i=r.parentNode.parentNode.rowIndex,
+		firedEmployee = document.getElementsByTagName('td')[0],
+		firedEmployeeName = firedEmployee.innerHTML,
+		theEmployeeNumber = employees.name.indexOf(firedEmployeeName);
+		employees.name.splice(theEmployeeNumber);
+	document.getElementById('content').deleteRow(i);
+}
+</script>

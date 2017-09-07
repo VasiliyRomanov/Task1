@@ -20,11 +20,14 @@
 	</thead>
 </table>
 
+<input type="button" value="Создать таблицу" onclick="renderEmpoyeeRows()">
+
 <script>
 	function renderEmpoyeeRows() {
 		for (var i = 0; i < employees.name.length; i++) {
 			    var row = document.createElement("tr");
     			var td1 = document.createElement("td");
+    			td1.id = 'empl' + i;
   				td1.appendChild(document.createTextNode("" + employees.name[i]));
     			var td2 = document.createElement("td");
     			td2.appendChild (document.createTextNode("" + employees.dep[i]));
@@ -44,7 +47,6 @@
     			content.appendChild(row);
 		}
 	}
-renderEmpoyeeRows();
 
 </script>
 
@@ -92,10 +94,10 @@ function delDelete() {
 <script>
 	function deleteRow(r) {
 	var i=r.parentNode.parentNode.rowIndex,
-		firedEmployee = document.getElementsByTagName('td')[0],
+		firedEmployee = r.parentNode.parentNode.firstChild,
 		firedEmployeeName = firedEmployee.innerHTML,
 		theEmployeeNumber = employees.name.indexOf(firedEmployeeName);
-		employees.name.splice(theEmployeeNumber);
+		employees.name.splice(theEmployeeNumber, 1);
 	document.getElementById('content').deleteRow(i);
 }
 </script>

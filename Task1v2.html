@@ -20,8 +20,6 @@
 	</thead>
 </table>
 
-<!-- Создаем таблицу с данными из массива -->
-
 <script>
 	function renderEmpoyeeRows() {
 		for (var i = 0; i < employees.name.length; i++) {
@@ -50,22 +48,29 @@ renderEmpoyeeRows();
 
 </script>
 
-<!-- Сохраняем введенные в графу З/П данные -->
-
 <script>
 var salaryValue = document.getElementsByTagName("input");
 var salary=[];
  
 function save(){
-    for (var i = 0; i <= 3; i++){
-    	var input = salaryValue[i];
-        salary[i] = input.value;
+    for (var i = 0; i <= employees.name.length + 2; i++){
+        salary[i] = salaryValue[i].value;
     }
 }
  
 </script>
 
-<!-- Вычисляем НДФЛ и выводим его в соответствующую ячейку -->
+<script>
+var delDel = "Удалить"
+function delDelete() {
+	var length = salary.length;
+	for (var i = 0; i < length; i++) {
+		if (salary[i] === delDel) salary.splice(i,1);
+	}
+}
+
+</script>
+
 
 <script>
 	function getNDFL() {
@@ -82,9 +87,7 @@ function save(){
 </script>
 
 
-<input type="button" value="Рассчитать НДФЛ" onclick="save(); getNDFL()">
-
-<!-- Удаляем строку из таблицы и имя сотрудника из массива -->
+<input type="button" value="Рассчитать НДФЛ" onclick="save(); delDelete(); getNDFL()">
 
 <script>
 	function deleteRow(r) {

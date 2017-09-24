@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Task</title>
+</head>
+
+<body>
+
+	<script src="Task1v3.js"></script>
+
+<table id="content" border="1">
+	<thead>
+		<th>№</th>
+		<th>ФИО</th>
+		<th>Отдел</th>
+		<th>З/П</th>
+		<th>НДФЛ</th>
+		<th></th>
+		<th></th>
+	</thead>
+	<tbody id="info"></tbody></table>
+
+<input type="button" value="Добавить строку" onclick="hire()">
+<script>
+	function renderEmpoyeeRows() {
+		var d = document.getElementById('info');
+		while (d.rows[0]) {
+			d.deleteRow(0);
+		}
+		for (var i = 0; i < employees.length; i++) {
+			    var row = document.createElement("tr");
+			    var td0 = document.createElement("td");
+			    td0.appendChild(document.createTextNode(i+1))
+    			var td1 = document.createElement("td");
+  				employees[i].name === "" ? td1.innerHTML = '<input type="text" onchange="saveName(this)">' : td1.appendChild (document.createTextNode(employees[i].name));
+    			var td2 = document.createElement("td");
+    			employees[i].dep === "" ? td2.innerHTML = '<input type="text" onchange="saveDep(this)">' : td2.appendChild (document.createTextNode(employees[i].dep));
+    			var td3 = document.createElement("td");
+    			employees[i].salary === "" ? td3.innerHTML = '<input type="text" class="s" onchange="getNDFL(this)">' : td3.appendChild (document.createTextNode(employees[i].salary));
+    			var td4 = document.createElement("td");
+    			td4.innerHTML = employees[i].ndfl + '';
+    			var td5 = document.createElement("td");
+    			td5.innerHTML = '<input type="button" value="Удалить" onclick="fireEmployee(this); ">';
+    			var td6 = document.createElement("td");
+    			td6.innerHTML = '<input type="button" value="Редактировать" onclick="edit(this)">';
+    			row.appendChild(td0);
+    			row.appendChild(td1);
+    			row.appendChild(td2);
+    			row.appendChild(td3);
+    			row.appendChild(td4);
+    			row.appendChild(td5);
+    			row.appendChild(td6);
+    			info.appendChild(row);
+		}
+	}
+
+		renderEmpoyeeRows();
+</script>
+
+
+<script>
+	function fireEmployee(f) {
+	var i = f.parentNode.parentNode.firstChild.innerHTML;
+		employees.splice(i-1, 1);
+		renderEmpoyeeRows();
+}
+</script>
+
+<script>
+	function edit(e) {
+		var i = e.parentNode.parentNode.firstChild.innerHTML;
+		employees[i-1].name = employees[i-1].dep = employees[i-1].salary = employees[i-1].ndfl = "";
+		renderEmpoyeeRows();
+	}
+</script>
+
+<script>
+	function hire() {
+		employees.push({name: '', dep: '', salary: '', ndfl: ''});
+		renderEmpoyeeRows();
+	}
+</script>
+
+<script>
+	function getNDFL(v) {
+		var salary = v.value,
+			ndflCell = v.parentNode.nextSibling,
+		ndfl = ndflCell.innerHTML = salary * 0.13;
+		i = v.parentNode.parentNode.firstChild.innerHTML;
+		employees[i-1].salary = salary;
+		employees[i-1].ndfl = ndfl;
+	}
+</script>
+
+<script>
+	function saveName(sn) {
+		var name = sn.value,
+		i = sn.parentNode.parentNode.firstChild.innerHTML;
+		employees[i-1].name = name;
+	}
+</script>
+
+<script>
+	function saveDep(sd) {
+		var dep = sd.value,
+		i = sd.parentNode.parentNode.firstChild.innerHTML;
+		employees[i-1].dep = dep;
+	}
+</script>
